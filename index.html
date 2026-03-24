@@ -1,0 +1,53 @@
+---
+layout: default
+title: Ana Sayfa
+---
+
+<section class="hero">
+  <div class="hero-inner">
+    <span class="kicker">Network • Firewall • Security</span>
+    <h1>Güvenli ağlar için<br>pratik notlar.</h1>
+    <p class="sub">Firewall politikaları, switch yapılandırmaları ve siber güvenlik konularında kısa, net ve uygulanabilir yazılar.</p>
+    <div class="cta">
+      <a class="btn primary" href="#posts">Yazılara Git</a>
+      <a class="btn" href="/hakkimda/">Hakkımda</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="posts">
+  <h2 class="section-title">Son Yazılar</h2>
+
+  <div class="filters">
+    <button class="chip active" onclick="filterCat('all',this)">Tümü</button>
+    <button class="chip" onclick="filterCat('firewall',this)">Firewall</button>
+    <button class="chip" onclick="filterCat('switch',this)">Switch</button>
+    <button class="chip" onclick="filterCat('siber-guvenlik',this)">Siber Güvenlik</button>
+    <button class="chip" onclick="filterCat('network',this)">Network</button>
+    <button class="chip" onclick="filterCat('vpn',this)">VPN</button>
+  </div>
+
+  <div class="grid">
+    {% for post in site.posts %}
+    <a href="{{ post.url }}" class="card post" data-cat="{{ post.categories | first }}">
+      <span class="tag">{{ post.categories | first }}</span>
+      <h3>{{ post.title }}</h3>
+      <p>{{ post.excerpt | strip_html | truncate: 120 }}</p>
+      <div class="meta">
+        <span>{{ post.date | date: "%d %b %Y" }}</span>
+        <span>{{ post.content | number_of_words | divided_by: 200 | plus: 1 }} dk</span>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<script>
+function filterCat(cat,el){
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.post').forEach(p=>{
+    p.style.display=(cat==='all'||p.dataset.cat===cat)?'':'none';
+  });
+}
+</script>
