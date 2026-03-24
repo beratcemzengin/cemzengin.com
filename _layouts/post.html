@@ -2,12 +2,167 @@
 layout: default
 ---
 
-<div class="post-page">
-  <a href="/" class="back">← geri dön</a>
-  <span class="post-tag" style="margin-bottom:12px">{{ page.categories | first }}</span>
-  <h1>{{ page.title }}</h1>
-  <div class="pmeta">{{ page.date | date: "%d.%m.%Y" }} · {{ page.content | number_of_words | divided_by: 200 | plus: 1 }} dk okuma</div>
-  <div class="content">
+<div style="max-width:780px;margin:0 auto;padding:48px 24px 80px">
+
+  <a href="/" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:8px;font-size:12px;font-weight:500;color:var(--text2);border:1px solid var(--border);background:var(--surface);margin-bottom:28px;transition:.2s">← geri dön</a>
+
+  <div style="display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--green);font-family:var(--mono);padding:4px 10px;border-radius:6px;background:var(--green-dim);border:1px solid rgba(0,255,136,.08);margin-bottom:14px">{{ page.categories | first }}</div>
+
+  <h1 style="font-size:clamp(24px,4vw,36px);font-weight:800;color:var(--white);line-height:1.15;letter-spacing:-.6px;margin:12px 0">{{ page.title }}</h1>
+
+  <div style="color:var(--text3);font-size:12px;font-family:var(--mono);padding:14px 0 24px;margin-bottom:28px;border-bottom:1px solid var(--border)">{{ page.date | date: "%d.%m.%Y" }} · {{ page.content | number_of_words | divided_by: 200 | plus: 1 }} dk okuma</div>
+
+  <div class="post-content">
     {{ content }}
   </div>
+
 </div>
+
+<style>
+.post-content{
+  color:var(--text);
+  font-size:15.5px;
+  line-height:1.85;
+}
+
+.post-content h2{
+  color:var(--white);
+  font-size:24px;
+  margin:44px 0 16px;
+  letter-spacing:-.4px;
+  padding:12px 0 12px 16px;
+  border-left:3px solid var(--green);
+  background:linear-gradient(90deg,var(--green-dim),transparent);
+  border-radius:0 8px 8px 0;
+}
+
+.post-content h3{
+  color:var(--cyan);
+  font-size:18px;
+  margin:32px 0 12px;
+}
+
+.post-content p{
+  margin-bottom:20px;
+  color:var(--text);
+}
+
+.post-content strong{
+  color:var(--white);
+}
+
+.post-content code{
+  background:rgba(0,255,136,.08);
+  color:var(--green);
+  padding:3px 8px;
+  border-radius:5px;
+  font-size:13.5px;
+  font-family:var(--mono);
+}
+
+.post-content pre{
+  background:var(--black);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:24px;
+  margin:24px 0;
+  overflow-x:auto;
+  position:relative;
+}
+
+.post-content pre::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--green),transparent);
+  opacity:.5;
+}
+
+.post-content pre code{
+  background:none;
+  padding:0;
+  color:#7ee787;
+  font-size:13.5px;
+  line-height:1.8;
+}
+
+.post-content blockquote{
+  border-left:3px solid var(--green);
+  padding:16px 24px;
+  margin:24px 0;
+  background:var(--green-dim);
+  border-radius:0 12px 12px 0;
+  color:var(--text);
+  font-size:14px;
+}
+
+.post-content blockquote p{
+  margin-bottom:8px;
+}
+
+.post-content blockquote p:last-child{
+  margin-bottom:0;
+}
+
+.post-content ul,
+.post-content ol{
+  margin:0 0 20px 24px;
+}
+
+.post-content li{
+  margin-bottom:10px;
+  color:var(--text);
+}
+
+.post-content table{
+  width:100%;
+  border-collapse:collapse;
+  margin:24px 0;
+  font-size:14px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.post-content th{
+  text-align:left;
+  padding:12px 16px;
+  background:var(--surface2);
+  border-bottom:2px solid var(--border2);
+  color:var(--green);
+  font-family:var(--mono);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+
+.post-content td{
+  padding:12px 16px;
+  border-bottom:1px solid var(--border);
+  color:var(--text2);
+}
+
+.post-content tr:hover td{
+  background:var(--green-dim);
+}
+
+.post-content img{
+  max-width:100%;
+  border-radius:12px;
+  border:1px solid var(--border);
+  margin:24px 0;
+}
+
+.post-content a{
+  color:var(--green);
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+
+.post-content hr{
+  border:none;
+  border-top:1px solid var(--border);
+  margin:32px 0;
+}
+</style>
