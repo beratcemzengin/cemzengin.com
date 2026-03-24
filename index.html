@@ -4,50 +4,125 @@ title: Ana Sayfa
 ---
 
 <section class="hero">
-  <div class="hero-inner">
-    <span class="kicker">Network • Firewall • Security</span>
-    <h1>Güvenli ağlar için<br>pratik notlar.</h1>
-    <p class="sub">Firewall politikaları, switch yapılandırmaları ve siber güvenlik konularında kısa, net ve uygulanabilir yazılar.</p>
-    <div class="cta">
-      <a class="btn primary" href="#posts">Yazılara Git</a>
-      <a class="btn" href="/hakkimda/">Hakkımda</a>
+  <div class="container">
+    <div class="hero-grid">
+
+      <div class="hero-main">
+        <div class="hero-badge">network · firewall · security</div>
+        <h1>Güvenli ağlar için<br><em>pratik notlar</em>.</h1>
+        <p class="lead">Firewall politikaları, switch konfigürasyonları ve siber güvenlik üzerine kısa, uygulanabilir yazılar. Sahadan notlar.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#posts">→ Yazıları Gör</a>
+          <a class="btn" href="/hakkimda/">Hakkımda</a>
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <div class="terminal">
+          <div class="terminal-bar">
+            <div class="terminal-dot" style="background:var(--red)"></div>
+            <div class="terminal-dot" style="background:var(--yellow)"></div>
+            <div class="terminal-dot" style="background:var(--green)"></div>
+            <span class="terminal-title">cem@fw01:~</span>
+          </div>
+          <div class="terminal-body">
+            <span class="t-prompt">$</span> <span class="t-cmd">whoami</span><br>
+            <span class="t-out">cem.zengin</span><br><br>
+            <span class="t-prompt">$</span> <span class="t-cmd">cat focus.txt</span><br>
+            <span class="t-out">firewall · switch · security</span><br><br>
+            <span class="t-prompt">$</span> <span class="t-cmd">uptime</span><br>
+            <span class="t-out">always on</span><br>
+            <span class="t-prompt">$ <span class="t-cmd" style="animation:blink 1s step-end infinite">_</span></span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <h4>Odak Alanları</h4>
+          <div class="stat-row"><span class="stat-label">Firewall</span><span class="stat-value">Policy · NAT · HA</span></div>
+          <div class="stat-row"><span class="stat-label">Switch</span><span class="stat-value">VLAN · STP · L3</span></div>
+          <div class="stat-row"><span class="stat-label">Security</span><span class="stat-value">Hardening · Log</span></div>
+          <div class="stat-row"><span class="stat-label">VPN</span><span class="stat-value">IPSec · SSL</span></div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
 <section class="section" id="posts">
-  <h2 class="section-title">Son Yazılar</h2>
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Blog</h2>
+      <span class="section-hint">// son yazılar</span>
+    </div>
 
-  <div class="filters">
-    <button class="chip active" onclick="filterCat('all',this)">Tümü</button>
-    <button class="chip" onclick="filterCat('firewall',this)">Firewall</button>
-    <button class="chip" onclick="filterCat('switch',this)">Switch</button>
-    <button class="chip" onclick="filterCat('siber-guvenlik',this)">Siber Güvenlik</button>
-    <button class="chip" onclick="filterCat('network',this)">Network</button>
-    <button class="chip" onclick="filterCat('vpn',this)">VPN</button>
-  </div>
+    <div class="filters" id="filterBar">
+      <button class="filter active" data-cat="all">Tümü</button>
+      <button class="filter" data-cat="firewall">Firewall</button>
+      <button class="filter" data-cat="switch">Switch</button>
+      <button class="filter" data-cat="siber-guvenlik">Siber Güvenlik</button>
+      <button class="filter" data-cat="network">Network</button>
+      <button class="filter" data-cat="vpn">VPN</button>
+    </div>
 
-  <div class="grid">
-    {% for post in site.posts %}
-    <a href="{{ post.url }}" class="card post" data-cat="{{ post.categories | first }}">
-      <span class="tag">{{ post.categories | first }}</span>
-      <h3>{{ post.title }}</h3>
-      <p>{{ post.excerpt | strip_html | truncate: 120 }}</p>
-      <div class="meta">
-        <span>{{ post.date | date: "%d %b %Y" }}</span>
-        <span>{{ post.content | number_of_words | divided_by: 200 | plus: 1 }} dk</span>
-      </div>
-    </a>
-    {% endfor %}
+    <div class="posts-grid" id="postsGrid">
+      {% for post in site.posts %}
+      <a href="{{ post.url }}" class="post-card" data-cat="{{ post.categories | first }}">
+        <span class="post-tag">{{ post.categories | first }}</span>
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.excerpt | strip_html | truncate: 130 }}</p>
+        <div class="post-meta">
+          <span>{{ post.date | date: "%d.%m.%Y" }}</span>
+          <span class="read-arrow">oku →</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
   </div>
 </section>
 
+<section class="section" id="about">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Hakkımda</h2>
+      <span class="section-hint">// kısa bio</span>
+    </div>
+    <div class="about-card">
+      <p>Ben <strong>Cem Zengin</strong>. Firewall ve network tarafında çalışıyorum. Bu sitede konfigürasyonları, karşılaştığım sorunları ve çözümlerini paylaşıyorum.</p>
+      <div class="about-grid">
+        <div>
+          <h3>// uzmanlık</h3>
+          <ul class="skill-list">
+            <li>Firewall Yönetimi</li>
+            <li>Switch Konfigürasyonu</li>
+            <li>Network Altyapı</li>
+            <li>VPN Sistemleri</li>
+            <li>Siber Güvenlik</li>
+            <li>IDS / IPS</li>
+          </ul>
+        </div>
+        <div>
+          <h3>// iletişim</h3>
+          <ul class="skill-list">
+            <li><a href="https://linkedin.com/in/beratcemzengin" target="_blank" style="color:var(--green)">LinkedIn ↗</a></li>
+            <li><a href="mailto:cemzengin@cemzengin.com.tr" style="color:var(--green)">cemzengin@cemzengin.com.tr</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>@keyframes blink{50%{opacity:0}}</style>
 <script>
-function filterCat(cat,el){
-  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');
-  document.querySelectorAll('.post').forEach(p=>{
-    p.style.display=(cat==='all'||p.dataset.cat===cat)?'':'none';
+document.querySelectorAll('#filterBar .filter').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('#filterBar .filter').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat=btn.dataset.cat;
+    document.querySelectorAll('#postsGrid .post-card').forEach(card=>{
+      card.style.display=(cat==='all'||card.dataset.cat===cat)?'':'none';
+    });
   });
-}
+});
 </script>
