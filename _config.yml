@@ -1,21 +1,7 @@
 title: Cem Zengin
-description: Firewall, Switch ve Siber Güvenlik üzerine notlar
+description: Firewall, Network & Cyber Security Blog
 url: "https://cemzengin.com"
 baseurl: ""
-
-theme: minima
-
-author:
-  name: Cem Zengin
-  email: cemzengin@cemzengin.com.tr
-
 permalink: /:categories/:title/
-
-collections_dir: ""
-defaults:
-  - scope:
-      path: ""
-      type: "posts"
-    values:
-      layout: "post"
-      author: "Cem Zengin"
+markdown: kramdown
+plugins: []
