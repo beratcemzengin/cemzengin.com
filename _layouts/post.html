@@ -1,0 +1,13 @@
+---
+layout: default
+---
+
+<div class="post-page">
+  <a href="/" class="back">← Ana Sayfa</a>
+  <span class="tag">{{ page.categories | first }}</span>
+  <h1>{{ page.title }}</h1>
+  <div class="pmeta">{{ page.date | date: "%d %B %Y" }} • {{ page.content | number_of_words | divided_by: 200 | plus: 1 }} dk okuma</div>
+  <div class="content">
+    {{ content }}
+  </div>
+</div>
