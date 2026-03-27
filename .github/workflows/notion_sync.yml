@@ -1,0 +1,27 @@
+name: Notion to Jekyll Sync
+on:
+  schedule:
+    - cron: '0 * * * *' # Her saat başı otomatik kontrol eder
+  workflow_dispatch: # Manuel çalıştırma butonu ekler
+
+jobs:
+  notion_to_jekyll:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Notion to Markdown
+        uses: abrignoni/notion-to-jekyll@v1.0
+        with:
+          notion_token: ${{ secrets.NOTION_TOKEN }}
+          notion_database_id: ${{ secrets.NOTION_DATABASE_ID }}
+          output_path: "_posts"
+
+      - name: Commit and Push
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add _posts/*.md
+          git commit -m "Notion'dan yeni blog yazısı eklendi" || echo "Değişiklik yok"
+          git push
