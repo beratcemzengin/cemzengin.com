@@ -7,12 +7,14 @@ on:
 jobs:
   notion_to_jekyll:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # GitHub'ın dosyaları yazabilmesi için gerekli
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Notion to Markdown
-        uses: abrignoni/notion-to-jekyll@v1.0
+        uses: b-douglas/notion-to-markdown@v1.0.0 # Bu paket daha güncel
         with:
           notion_token: ${{ secrets.NOTION_TOKEN }}
           notion_database_id: ${{ secrets.NOTION_DATABASE_ID }}
