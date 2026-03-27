@@ -1,14 +1,14 @@
 name: Notion to Jekyll Sync
 on:
   schedule:
-    - cron: '0 * * * *'
-  workflow_dispatch:
+    - cron: '0 * * * *' # Her saat başı otomatik kontrol eder
+  workflow_dispatch: # Manuel çalıştırma butonu ekler
 
 jobs:
   notion_to_jekyll:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: write # Dosya yazma izni
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -25,13 +25,12 @@ jobs:
         env:
           NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
           NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
-        run: |
-          python .github/scripts/notion_sync.py
+        run: python notion_sync.py
 
       - name: Commit and Push
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
           git add _posts/*.md
-          git commit -m "Notion'dan yeni yazılar eklendi" || echo "Değişiklik yok"
+          git commit -m "Notion'dan yeni blog yazısı eklendi" || echo "Değişiklik yok"
           git push
