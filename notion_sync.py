@@ -14,8 +14,7 @@ def slugify(text):
     return re.sub(r'[^\w\-]', '', text)
 
 try:
-    # Kütüphane versiyon farklarını aşmak için doğrudan API çağrısı yapıyoruz
-    # Bu yöntem 'AttributeError' hatasını %100 engeller.
+    # Versiyon hatalarını aşmak için en güvenli sorgu yöntemi:
     response = notion.databases.query(database_id=db_id)
     pages = response.get("results", [])
 
@@ -55,4 +54,5 @@ try:
     print("İşlem başarıyla tamamlandı.")
 
 except Exception as e:
+    # Hata varsa detaylı yazdır
     print(f"Hata Detayı: {str(e)}")
