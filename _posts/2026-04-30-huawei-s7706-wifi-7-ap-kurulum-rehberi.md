@@ -5,15 +5,15 @@ date: 2026-04-30
 categories: network
 ---
 
-Huawei AP controller olan switchlerde switch güncellemesini yapsanız bile arayüzünden Wi-Fi 7 olan AP yayınını göremeyebiliyorsunuz[cite: 1]. Bu gibi durumlarda komut satırı (CLI) üzerinden switch üzerine müdahale etmeniz gereken anlar oluyor[cite: 1].
+Huawei AP controller olan switchlerde switch güncellemesini yapsanız bile arayüzünden Wi-Fi 7 olan AP yayınını göremeyebiliyorsunuz. Bu gibi durumlarda komut satırı (CLI) üzerinden switch üzerine müdahale etmeniz gereken anlar oluyor. İşte adım adım kurulum rehberi:
 
 ## 1. Hazırlık ve Kontrol
 Yeni cihazı bağlamadan önce altyapının hazır olduğundan emin olun:
-* **Versiyon:** En az V200R024 ana sürümü ve SPH180 (veya üstü) yaması aktif olmalıdır[cite: 1].
-* **Lisans:** `display license` komutu ile mevcut AP kapasitenizi kontrol edin[cite: 1].
+* **Versiyon:** En az V200R024 ana sürümü ve SPH180 (veya üstü) yaması aktif olmalıdır.
+* **Lisans:** `display license` komutu ile mevcut AP kapasitenizi kontrol edin.
 
 ## 2. Wi-Fi 7 Radyo Profili Oluşturma
-Web arayüzünde Wi-Fi 7 seçeneği çıkmadığı için bu işlemi bir kez CLI'dan yapmanız yeterlidir[cite: 1]:
+Web arayüzünde Wi-Fi 7 seçeneği çıkmadığı için bu işlemi bir kez CLI'dan yapmanız yeterlidir:
 ```bash
 system-view
 wlan
@@ -25,15 +25,14 @@ radio-5g-profile name wifi7-test
 ```
 
 ## 3. Yeni AP'yi Tanımlama
-Yeni AP'yi switch'e bağlayın ve ID numarasını öğrenin[cite: 1]:
+Yeni AP'yi switch'e bağlayın ve ID numarasını öğrenin:
 ```bash
 display ap all
 ```
 *(Örnek: Yeni cihazın ID'si 42 olsun.)*
 
 ## 4. Profili Yeni AP'ye Atama
-Bu profil sadece Wi-Fi 7 destekli cihazlara (AirEngine 5776-26 gibi) atanmalıdır[cite: 1]:
-
+Bu profil sadece Wi-Fi 7 destekli cihazlara (AirEngine 5776-26 gibi) atanmalıdır:
 ```bash
 wlan
  ap-id 42
@@ -50,18 +49,19 @@ wlan
 ```
 
 ## 5. Sistem ve Protokol Denetleme (Kritik Adım)
-Tüm AP'lerin hangi protokolde (ax mi be mi) çalıştığını tek bir tabloda görmek için şu komutu kullanın[cite: 1]:
+Tüm AP'lerin hangi protokolde (ax mi be mi) çalıştığını tek bir tabloda görmek için şu komutu kullanın:
+
 ```bash
 display wlan radio all
 ```
 
-**Kontrol:** Bu tabloda, yeni eklediğiniz AP'nin karşısında **11be** yazdığını görmelisiniz[cite: 1]. Diğer eski AP'lerinizin **11ax** olarak kalmaya devam ettiğini de buradan teyit edebilirsiniz[cite: 1].
+**Kontrol:** Bu tabloda, yeni eklediğiniz AP'nin karşısında **11be** yazdığını görmelisiniz. Diğer eski AP'lerinizin **11ax** olarak kalmaya devam ettiğini de buradan teyit edebilirsiniz.
 
 ## 6. Kayıt
-Yaptığınız ayarların kalıcı olması için[cite: 1]:
+Yaptığınız ayarların kalıcı olması için:
 ```bash
 save
 ```
 
-> **Not:** Web arayüzünde "Radio Type" kısmının boş görünmesi tamamen görsel bir durumdur; `display wlan radio all` çıktısında **11be** yazıyorsa Wi-Fi 7 hızından faydalanıyorsunuz demektir[cite: 1].
+> **Not:** Web arayüzünde "Radio Type" kısmının boş görünmesi tamamen görsel bir durumdur; `display wlan radio all` çıktısında **11be** yazıyorsa Wi-Fi 7 hızından faydalanıyorsunuz demektir.
 ```
