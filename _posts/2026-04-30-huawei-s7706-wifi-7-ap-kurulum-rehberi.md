@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Huawei S7706 Wi-Fi 7 (802.11be) AP Kurulum Rehberi"
+title: "Huawei Switch ve AC'lerde Wi-Fi 7 (802.11be) AP Yapılandırma Rehberi"
 date: 2026-04-30
 categories: network
 ---
