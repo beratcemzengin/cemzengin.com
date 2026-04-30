@@ -1,39 +1,54 @@
 ---
 layout: post
-title: "FortiGate VXLAN Konfigürasyonu"
-date: 2024-01-30
+title: "FortiGate VXLAN Yapılandırması: Adım Adım Rehber"
+date: 2026-04-30
 categories: firewall
 ---
 
-FortiGate firewall de yapılandıracağım konfigürasyonun web üzerinde karşılığı olmadığı izin işlemlerimi ilk olarak CLI konsol kullanarak yapılandıracağım. CLI konsolumu açıyorum ve yapılandırmama başlıyorum.
+FortiGate firewall cihazlarında yapılandıracağımız bazı konfigürasyonların web arayüzünde (GUI) karşılığı bulunmamaktadır[cite: 1]. Bu nedenle işlemlerimizi ilk olarak CLI konsolu kullanarak gerçekleştireceğiz[cite: 1]. CLI konsolumuzu açıyoruz ve yapılandırmaya başlıyoruz[cite: 1].
 
+## 1. Adım: CLI ile VXLAN Arayüzü Oluşturma
+
+Yapılandırmanın ilk adımında sanal tünel arayüzünü tanımlıyoruz[cite: 1]:
 ```bash
 MERKEZ-40F # config system vxlan
 MERKEZ-40F (vxlan) # edit vxlan35
-new entry 'vxlan35' added
+# new entry 'vxlan35' added
 MERKEZ-40F (vxlan35) # set vni 35
 MERKEZ-40F (vxlan35) # set interface wan
-MERKEZ-40F (vxlan35) # set remote-ip x.x.x.x
+MERKEZ-40F (vxlan35) # set remote-ip x.x.x.x  # Uzak cihazın Public IP adresi
 MERKEZ-40F (vxlan35) # end
+```
 
-Wan portumu kontrol ettiğimde VXLAN35 arayüzümün oluştuğunu teyit ediyorum.
+Wan portunu kontrol ettiğimizde **VXLAN35** arayüzünün oluştuğunu teyit ediyoruz[cite: 1].
 
-Sonraki adımda oluşturmuş olduğum VXLAN altında bir 35 id nolu vlan interface oluşturuyorum. 35 nolu vlan mını sanallaştırıp uzağa bölgeye taşıyacağım. Görüldüğü üzere interface oluşturuldu.
+## 2. Adım: VLAN Interface ve Sanallaştırma
 
-Sonraki adımda local network altında ilgili vlan ı oluşturuyorum. Bu adımalar da network ip bilgisi girmiyorum.
+Oluşturduğumuz VXLAN altında 35 ID nolu bir VLAN interface oluşturuyoruz[cite: 1]. Bu sayede 35 nolu VLAN'ımızı sanallaştırıp uzak bölgeye taşıyacağız[cite: 1]. Arayüzün başarıyla oluşturulduğunu kontrol ediyoruz[cite: 1].
 
-Sonraki adımda tekrar bir interface oluşturuyorum ve type olarak software switch seçiyorum. Bir önceki adımlarda oluşturmuş olduğum vlan ve vxlan interface seçip member ediyorum. Son olarak dhcp sunucumu açıp ok diyerek işlememi tamamlıyorum. Görüldüğü üzere software sw oluşturuldu.
+Sonraki adımda lokal network altında ilgili VLAN'ı oluşturuyoruz[cite: 1]. Bu aşamada herhangi bir network IP bilgisi girmiyoruz[cite: 1].
 
-Aynı işlemleri şubedeki farklı lokasyon 2. Firewall cihazımda da gerçekşetiriyorum. Görüldüğü üzere VXlan arayüz oluşturuldu.
+## 3. Adım: Software Switch Yapılandırması
 
-Sonraki adımda yukarıdaki adımların aynısı gerçekleştiriyorum. Sadece virtual sw oluşturma kısmında ip ver network bilgisini değişiyorum.
+Tekrar bir interface oluşturuyoruz ve tip (type) olarak **Software Switch** seçiyoruz[cite: 1]. Bir önceki adımlarda hazırladığımız VLAN ve VXLAN arayüzlerini seçerek bu switch'e üye (member) yapıyoruz[cite: 1]. Son olarak DHCP sunucusunu aktif ederek işlemimizi tamamlıyoruz[cite: 1].
 
-Bağlantımı test ediyorum. Merkez cihazımdan Ping cevabım alındı. “diagnose sys vxlan fdb list vxlan35” komutu ile vni, port, remote ip ve mac aderslerimi görüyorum.
+Yapılandırma sonunda Software Switch'in başarıyla oluşturulduğunu görüyoruz[cite: 1].
 
-Hata ileri şekilde teyit etmek istediğimde listedeki mac adresinin merkez cihazımdaki firewall vxlan interface e ait olduğunu görüyorum.
-mac=aa:a4:63:cf:4a:2a
+## 4. Adım: Şube Lokasyon Yapılandırması
 
-Aynısını şube cihazımı ping lerek gerçekleştiriyorum. Ping e cevam aldım.
+Aynı işlemleri şubedeki farklı lokasyonda bulunan ikinci firewall cihazımızda da gerçekleştiriyoruz[cite: 1]. Şube tarafında da VXLAN arayüzünün oluştuğunu teyit ediyoruz[cite: 1].
 
-Hata ileri şekilde teyit etmek istediğimde listedeki mac adresinin merkez cihazımdaki firewall vxlan interface e ait olduğunu görüyorum.
-mac=12:a7:22:98:91:5c
+Şube tarafındaki tek fark; Software Switch oluşturma kısmında IP ve network bilgisini lokasyona uygun şekilde güncelliyoruz[cite: 1].
+
+## 5. Adım: Bağlantı Testi ve MAC Doğrulama
+
+Bağlantıyı test etmek için merkez cihazından ping atıyoruz[cite: 1]. Ping cevabı alındıktan sonra aşağıdaki komutla durumu teyit ediyoruz[cite: 1]:
+```bash
+diagnose sys vxlan fdb list vxlan35
+```
+
+Bu komut ile VNI, port, remote IP ve MAC adreslerini görüyoruz[cite: 1].
+
+### Kritik Kontrol ve Teyit
+İleri seviye teyit işlemi için listedeki MAC adreslerini kontrol ediyoruz[cite: 1]. Örneğin; listedeki `aa:a4:63:cf:4a:2a` veya `12:a7:22:98:91:5c` gibi MAC adreslerinin, cihazlardaki firewall VXLAN interface'lerine ait olduğunu görerek trafiğin doğru tünel üzerinden geçtiğini doğruluyoruz[cite: 1].
+```
