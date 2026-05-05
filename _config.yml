@@ -1,7 +1,14 @@
 title: Cem Zengin
 description: Firewall, Network & Cyber Security Blog
-url: "https://cemzengin.com"
+url: "https://cemzengin.com.tr"
 baseurl: ""
+
+# Menüye eklenecek sayfalar
+header_pages:
+  - index.html
+  - hakkimda.html
+  - canli-harita.html
+
 permalink: /:categories/:title/
 markdown: kramdown
 plugins: []
